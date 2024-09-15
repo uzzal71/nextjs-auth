@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import Logout from "@/components/Logout";
 import Image from "next/image";
+import DefaultImage from "/public/avatars/default.png";
 
 import { redirect } from "next/navigation";
 
@@ -9,7 +10,7 @@ const HomePage = async () => {
 
   if (!session?.user) redirect("/");
 
-  const userImage = session?.user?.image || "default.png";
+  const userImage = session?.user?.image || DefaultImage;
 
   return (
     <div className="flex flex-col items-center m-4">
@@ -19,7 +20,7 @@ const HomePage = async () => {
         alt={session?.user?.name || "User Image"}
         width={72}
         height={72}
-        className="rounded-full"
+        className="rounded-full w-auto h-auto"
       />
       <Logout />
     </div>
