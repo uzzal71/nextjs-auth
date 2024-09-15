@@ -1,6 +1,8 @@
+import { doSocialLogin } from "@/app/actions";
+
 const LoginForm = () => {
   return (
-    <form>
+    <form action={doSocialLogin}>
       <button
         className='bg-pink-400 text-white p-2 rounded-md m-1 text-lg'
         type='submit'
