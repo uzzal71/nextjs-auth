@@ -5,6 +5,7 @@ export default function Home() {
   return (
     <Container sx={{ minWidth: 120 }}>
       <BasicSelect />
+      <BasicSelect />
     </Container>
   );
 }
