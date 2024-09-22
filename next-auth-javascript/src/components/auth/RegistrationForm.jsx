@@ -32,7 +32,7 @@ const RegistrationForm = () => {
   return (
     <>
       <Typography variant="h5" align="center" gutterBottom>
-        Registration
+        Hey, time to Sign up
       </Typography>
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>

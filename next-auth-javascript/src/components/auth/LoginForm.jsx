@@ -3,15 +3,7 @@
 // openssl rand -hex 32
 
 import { doCredentialLogin } from "@/app/actions";
-import {
-  Alert,
-  Box,
-  Button,
-  Divider,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Alert, Button, Divider, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import SocialLogin from "./SocialLogin";
@@ -40,66 +32,48 @@ const LoginForm = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "gray.100",
-      }}
-    >
-      <Paper
-        elevation={3}
-        sx={{
-          padding: 4,
-          maxWidth: "400px",
-          width: "100%",
-          borderRadius: 2,
-        }}
+    <>
+      <Typography variant="h5" align="center" gutterBottom>
+        Hey, time to Sign In
+      </Typography>
+      {error && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+      )}
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: "flex", flexDirection: "column", gap: "16px" }}
       >
-        <Typography variant="h5" align="center" gutterBottom>
-          Login
-        </Typography>
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-        <form
-          onSubmit={handleSubmit}
-          style={{ display: "flex", flexDirection: "column", gap: "16px" }}
+        <TextField
+          label="Email Address"
+          type="email"
+          name="email"
+          fullWidth
+          required
+          variant="outlined"
+        />
+        <TextField
+          label="Password"
+          type="password"
+          name="password"
+          fullWidth
+          required
+          variant="outlined"
+        />
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          disabled={loading}
         >
-          <TextField
-            label="Email Address"
-            type="email"
-            name="email"
-            fullWidth
-            required
-            variant="outlined"
-          />
-          <TextField
-            label="Password"
-            type="password"
-            name="password"
-            fullWidth
-            required
-            variant="outlined"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            disabled={loading}
-          >
-            {loading ? "Logging in..." : "Credential Login"}
-          </Button>
-        </form>
-        <Divider sx={{ my: 3 }} />
-        <SocialLogin />
-      </Paper>
-    </Box>
+          {loading ? "Logging in..." : "Credential Login"}
+        </Button>
+      </form>
+      <Divider sx={{ my: 3 }} />
+      <SocialLogin />
+    </>
   );
 };
 
