@@ -1,5 +1,3 @@
-"use client"; // Ensure this is a client-side component since it's using `auth` and async functions
-
 import { auth } from "@/auth";
 import Logout from "@/components/auth/Logout";
 import { Avatar, Box, Typography } from "@mui/material";

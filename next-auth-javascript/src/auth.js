@@ -1,8 +1,9 @@
+import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import { getUserByEmail } from "./data/user";
+import { User } from "./model/user-model";
 
 export const {
   handlers: { GET, POST },
@@ -16,33 +17,33 @@ export const {
   providers: [
     CredentialsProvider({
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        email: {},
+        password: {},
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
-
-        const email = credentials.email;
-        const password = credentials.password;
+        if (credentials === null) return null;
 
         try {
-          const user = getUserByEmail(email);
+          const user = await User.findOne({
+            email: credentials?.email,
+          });
 
-          if (user && user.password === password) {
-            const userWithoutPassword = {
-              id: String(user.id),
-              name: user.name,
-              email: user.email,
-            };
-            return userWithoutPassword;
+          if (user) {
+            const isMatch = await bcrypt.compare(
+              credentials.password,
+              user.password
+            );
+
+            if (isMatch) {
+              return user;
+            } else {
+              throw new Error("Email or Password is not correct");
+            }
           } else {
-            throw new Error("Email or Password is incorrect");
+            throw new Error("User not found");
           }
         } catch (error) {
-          console.error("Error during authentication:", error.message);
-          throw new Error(error.message || "Authorization failed");
+          throw new Error(error);
         }
       },
     }),

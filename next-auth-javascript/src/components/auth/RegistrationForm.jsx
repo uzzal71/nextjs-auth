@@ -1,6 +1,5 @@
 "use client";
 
-import { doCredentialLogin } from "@/app/actions";
 import { Alert, Button, Divider, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -16,14 +15,25 @@ const RegistrationForm = () => {
     setLoading(true);
     try {
       const formData = new FormData(event.currentTarget);
-      const response = await doCredentialLogin(formData);
+      const name = formData.get("name");
+      const email = formData.get("email");
+      const password = formData.get("password");
+
+      const response = await fetch(`/api/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
       if (response?.error) {
         setError(response.error.message);
       } else {
-        router.push("/home");
+        router.push("/");
       }
-    } catch (e) {
-      setError("Check your Credentials");
+    } catch (error) {
+      setError(error.message);
     } finally {
       setLoading(false);
     }
