@@ -1,8 +1,8 @@
-import RegistrationForm from "@/components/auth/RegistrationForm";
+import LoginForm from "@/components/auth/LoginForm";
 import { Box, Paper, Typography } from "@mui/material";
 import Link from "next/link";
 
-const RegistrationPage = () => {
+const LoginPage = () => {
   return (
     <Box
       sx={{
@@ -21,11 +21,11 @@ const RegistrationPage = () => {
           borderRadius: 2,
         }}
       >
-        <RegistrationForm />
+        <LoginForm />
         <Typography variant="body2" sx={{ mt: 2 }} align="center">
-          Already have an account?{" "}
-          <Link href="/" underline="hover">
-            Login
+          Don't you have an account?{" "}
+          <Link href="/register" underline="hover">
+            Register
           </Link>
         </Typography>
       </Paper>
@@ -33,4 +33,4 @@ const RegistrationPage = () => {
   );
 };
 
-export default RegistrationPage;
+export default LoginPage;
